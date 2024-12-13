@@ -57,6 +57,7 @@ class _InputState extends ConsumerState<Input> {
       var response = await ApiCaller.getWeather(cityName: location);
       if (response != null) {
         List<Weather> weathers = DataTransfer.transferWeatherJson(response);
+        ref.read(cityNameProvider.notifier).state = weathers[0].cityName;
         TemporarySaver.saveWeathers(weathers[0]);
         ref.read(weatherNotifierProvider.notifier).changeCityWeather(weathers);
       }
